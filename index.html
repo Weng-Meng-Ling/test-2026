@@ -978,12 +978,16 @@ function sendToGoogleForm(name, score) {
   formData.append('entry.728764218', name);      // 姓名欄位
   formData.append('entry.1974962633', score);    // 分數欄位
 
+  alert('準備傳送資料...');
+
   fetch(FORM_URL, {
     method: 'POST',
     mode: 'no-cors',
     body: formData
+  }).then(function() {
+    alert('已執行傳送動作');
   }).catch(function(err) {
-    // no-cors 模式下即使成功也可能進 catch，可忽略
+    alert('已執行傳送動作');
     console.log('Google Form 回應：', err);
   });
 }
