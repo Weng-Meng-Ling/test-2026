@@ -963,6 +963,29 @@ function submitQuiz(){
   document.getElementById('pg-quiz').classList.add('hidden');
   document.getElementById('pg-result').classList.remove('hidden');
   window.scrollTo(0,0);
+
+  // 自動送出成績到 Google 表單
+  sendToGoogleForm(userName, pct);
+}
+
+// ╔══════════════════════════════════════════╗
+// ║         SEND TO GOOGLE FORM             ║
+// ╚══════════════════════════════════════════╝
+function sendToGoogleForm(name, score) {
+  const FORM_URL = 'https://docs.google.com/forms/d/e/1m3N3XEbx7sL0tWC27eLI5VPYG3MPFxnVmyN3C0LlTvM/formResponse';
+
+  const formData = new FormData();
+  formData.append('entry.728764218', name);      // 姓名欄位
+  formData.append('entry.1974962633', score);    // 分數欄位
+
+  fetch(FORM_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  }).catch(function(err) {
+    // no-cors 模式下即使成功也可能進 catch，可忽略
+    console.log('Google Form 回應：', err);
+  });
 }
 
 function makeRV(n,q,ok,userTxt,corrTxt){
